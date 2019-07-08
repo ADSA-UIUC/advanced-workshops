@@ -30,8 +30,16 @@
   ** Walk through a story of how we created visualizations on above 3 supervised learning workshops
 
 - K-Means Clustering [unsupervised]
+https://archive.ics.uci.edu/ml/datasets/Sentiment+Labelled+Sentences
+Use kmeans to cluster data of varying length and then attempt to classify it as positive or negative with an SVM. 3 part series.
+  1.) Data cleansing with Pandas
+  2.) Preliminary visualizations
+  3.) Clustering
+  4.) Visualize clusters
+  5.) SVM classifier
+  6.) Review results
 
-- Hopfield Network [unsupervised]
+- Hopfield Network [memory]
 
 Other ideas
 - AWS Sagemaker?

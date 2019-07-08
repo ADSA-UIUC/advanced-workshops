@@ -33,7 +33,11 @@
 
 - Hopfield Network [unsupervised]
 
-Below are taught in 357/361, reconsider.
-- Markov Chains
-
-- Map Reduce
+Other ideas
+- AWS Sagemaker?
+- OpenCV?
+- Education datasets (CS 125, 225, 233)?
+  - Data cleansing with Pandas
+  - Struggling students ML model
+  - Visualizations with MPL/Plot.ly
+  

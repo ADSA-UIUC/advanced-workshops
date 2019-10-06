@@ -35,7 +35,7 @@ class data_gen:
         for key, value in ret.items():
             for i in range(self.dimensions):
                 test_data[i].extend(value[i])
-        return ret,test_data
+        return ret, test_data
 
     def create_class(self, properties):
         """Helper to create classes using np"""
@@ -57,9 +57,9 @@ def main():
         data = json.load(f)
     d = data_gen(dimensions=2, kwargs=data)
     a = d.create_data()
-    print(a)
     with open("../data_sets/data_set.json") as f:
         data = json.load(f)
+
 
 if __name__ == "__main__":
     main()

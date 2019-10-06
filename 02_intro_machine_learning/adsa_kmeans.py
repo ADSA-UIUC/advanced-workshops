@@ -18,8 +18,6 @@ class k_means():
         self.test, self.train = self.data_gen.create_data()
         self.x = self.train[0]
         self.y = self.train[1]
-        plt.plot(self.x, self.y, 'ro')
-        plt.show()
         self.x_start1 = random.choice(self.x)
         self.y_start1 = random.choice(self.y)
         self.x_start2 = random.choice(self.x)
@@ -43,16 +41,14 @@ class k_means():
         self.change_centres()
 
     def change_centres(self):
-        self.x_start1 = sum(self.cur_class1[0])/len(self.cur_class1[0])
-        self.x_start2 = sum(self.cur_class2[0])/len(self.cur_class2[0])
-        self.y_start1 = sum(self.cur_class1[1])/len(self.cur_class1[1])
-        self.y_start2 = sum(self.cur_class2[1])/len(self.cur_class2[1])
+        self.x_start1 = sum(self.cur_class1[0]) / len(self.cur_class1[0])
+        self.x_start2 = sum(self.cur_class2[0]) / len(self.cur_class2[0])
+        self.y_start1 = sum(self.cur_class1[1]) / len(self.cur_class1[1])
+        self.y_start2 = sum(self.cur_class2[1]) / len(self.cur_class2[1])
 
     def run(self, k):
         for i in range(k):
             self.classify()
-            print(len(self.cur_class1[0]))
-            print(len(self.cur_class2[0]))
 
     def _calculate_distance(self, x, y):
         dist1 = (self.x_start1 - x)**2 + (self.y_start1 - y)**2
@@ -65,9 +61,15 @@ class k_means():
 
 def main(path):
     kmeans = k_means(path=path)
+    fig, (ax1, ax2) = plt.subplots(2)
+    ax1.set_title('Before and After Clustering')
+    ax1.plot(kmeans.x, kmeans.y, 'bo', label='Unlabelled data')
+    ax1.legend()
+
     kmeans.run(100)
-    plt.plot(kmeans.cur_class1[0], kmeans.cur_class1[1], 'ro')
-    plt.plot(kmeans.cur_class2[0], kmeans.cur_class2[1], 'go')
+    ax2.plot(kmeans.cur_class1[0], kmeans.cur_class1[1], 'ro', label='Class 1')
+    ax2.plot(kmeans.cur_class2[0], kmeans.cur_class2[1], 'go', label='Class 2')
+    ax2.legend()
     plt.show()
 
 

@@ -40,21 +40,24 @@ class LinearRegression:
         return - an array of costs from each iteration
         """
         cost_history = []  # Initialize list of size iterations to all 0's
-        self.coefficients = np.zeros(X_train.shape[1])  # init coeff
-
-        # TODO: Implement this function
+        num_rows = len(y_train)  # Compute number of data points
+        self.coefficients = np.zeros(X_train.shape[1])
 
         for iteration in range(iterations):
             # Compute the predicted target values as a matrix
+            hypothesis = X_train.dot(self.coefficients)
 
-            # Compute the difference (loss) between hypothesis (predicted) and target (actual) values in the matrices
+            # Compute the difference between hypothesis (predicted) and target (actual) values in the matrices
+            loss = hypothesis - y_train
 
             # Compute the new gradient for this iteration as a float array
+            gradient = X_train.T.dot(loss) / num_rows
 
-            # Use the gradient and learning rate to recompute self.coefficients
+            # Compute the new coefficients as a matrix from the new gradient
+            self.coefficients -= learning_rate * gradient
 
             # Calculate the cost from this iteration
-            cost = 0
+            cost = np.sum(loss ** 2) / (2 * num_rows)
 
             # Store the cost in the history
             cost_history.append(cost)
@@ -74,7 +77,7 @@ class LinearRegression:
         return RMSE, R2_accuracy
 
 
-data = pd.read_csv("student.csv")
+data = pd.read_csv("../student.csv")
 
 # Ploting the scores as scatter plot
 fig = plt.figure()

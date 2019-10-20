@@ -13,12 +13,10 @@ import matplotlib.pyplot as plt
 class NB:
 
     def __init__(self, train_path, test_path, k_factor=0.1):
-
         # Intitialize all required variables
         self.corr = 0
         self.wrong = 0
-        self.probabilities = {
-            str(k): [0 for j in range(28*28)] for k in range(10)}
+        self.probabilities = {k: np.zeros(28 * 28) for k in range(10)}
         self.priors = []
         self.conf_matrix = [[0 for i in range(10)] for j in range(10)]
 
@@ -26,8 +24,11 @@ class NB:
         start = time.time()
         with open(train_path, 'r') as fin:
             self.train_data = json.load(fin)
+            print(type(self.train_data))
+            self.train_data = {int(k): v for k, v in self.train_data.items()}
         with open(test_path, 'r') as fin:
             self.test_data = json.load(fin)
+            self.test_data = {int(k): v for k, v in self.test_data.items()}
         print("Time taken to load the data : {}".format(time.time()-start))
 
         # Train the model by calculating the probabilities P(xi|y)
@@ -38,7 +39,7 @@ class NB:
         # Classify them by doing
         # argmax_over_y (ln prior + sum_over_all_x(ln(p(x|y))))
         start = time.time()
-        self.classify(self.test_data)
+        self.test(self.test_data)
         print("Time taken to classify full test data set is {}".format(
             time.time()-start))
 
@@ -69,15 +70,15 @@ class NB:
             plt.title("Heatmap for the digit {}".format(digit))
         plt.show()
 
-    def classify(self, data):
+    def test(self, data):
         # Loop through the dictionary with all test samples
         for key, value in data.items():
             # Loop through all samples for current class
             for digit in value:
                 # Call helper classify function
                 res = self._classify(digit)
-                self.conf_matrix[int(key)][res] += 1
-                if(int(key) == res):
+                self.conf_matrix[key][res] += 1
+                if(key == res):
                     self.corr += 1
                 else:
                     self.wrong += 1
@@ -87,10 +88,8 @@ class NB:
         To do:
         Given a digit sample in arr use the helper
         function _get_cur_arg_value() to get the
-        value of the argument (ln prior + sum_over_all_x(ln(p(x|y))))
-        and classify to whatever y makes this value max
-        and return that y
-        MAKE SURE TO UPDATE Conf Matrix and self.corr and self.wrong
+        value of (ln prior + sum_over_all_x(ln(p(x|y))))
+        for each digit (y) and return whatever digit (y) maximizes this.
         arr is a feature vector of size 28*28
         """
         # Put your code here

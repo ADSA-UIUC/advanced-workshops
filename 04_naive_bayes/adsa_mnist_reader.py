@@ -4,7 +4,7 @@ import json
 class reader:
     def __init__(self,lim=100):
         self.train,self.test = self._get_data(lim)
-        self._print_list(self.train['0'])
+        self._print_list(self.train[0])
         with open("train_data.json",'w') as fout:
             json.dump(self.train,fout)
         with open("test_data.json",'w') as fout:
@@ -31,7 +31,7 @@ class reader:
                         cur_elem.append(1)
                     else:
                         cur_elem.append(0)
-                train[digit[0]].append(cur_elem)
+                train[int(digit[0])].append(cur_elem)
 
         with open('mnist_test.csv','r') as fin:
             mnist_reader = csv.reader(fin)
@@ -42,7 +42,7 @@ class reader:
                         cur_elem.append(1)
                     else:
                         cur_elem.append(0)
-                test[digit[0]].append(cur_elem)
+                test[int(digit[0])].append(cur_elem)
         return train, test
 
 reader(45)

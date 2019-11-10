@@ -34,4 +34,4 @@ if __name__ == '__main__':
     model = KNN(train_features=train_features, train_labels=train_labels)
 
     expected = model.classify(test_features, 10)
-    print(classification_report(test_labels, e))
+    print(classification_report(test_labels, expected))
